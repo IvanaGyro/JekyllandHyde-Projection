@@ -1,5 +1,6 @@
 application*/
 media/*
+!media/PlayList.txt
 *.mp4
 *.gif
 *.png

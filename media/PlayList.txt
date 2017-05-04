@@ -1,0 +1,54 @@
+//this is comment line
+//position:      Left-top is (0,0), default is (0,0).
+//width,height:  Num for pixels, default is the size that as same as the picture.
+//               Enter (0,0) to set the size as same as the screen's. 
+//isLoop:        0 for playing once; 1 for playing loop, default is 0.
+
+//movingShadow.prog  The program to show Justic's shadow. Must have shadow.gif and battle.mov in the media folder. A:move to left; D:move to right
+//BubbleFade.prog    The program let the bubble fade in and fade out. I:fade in; O:fade out; P:pause
+//BirdFlying.prog    The program that use the kinect to control the flying bird. Must have flyingbird.gif 
+
+//gif: file.gif 10 10 
+//gif: filename position-x position-y width height isLoop
+//gif: filename position-x position-y width height 
+//gif: filename position-x position-y isLoop
+//gif: filename position-x position-y 
+//gif: filename isLoop
+//gif: filename
+
+//other picture(not animation)jpg, tga, png
+//otherPic: file.jpg 100 100 160 90
+//otherPic: filename position-x position-y width height
+//otherPic: filename position-x position-y
+//otherPic: filename
+
+//mov, mp4: file.mov 1
+//mov, mp4: filename isLoop
+//mov, mp4: filename
+
+//Example--------------------------
+//1: (No. of act)
+//file1.jpg 100 100 160 90
+//file2.gif 10 10   (this will be displayed by covering the item above)
+//
+//2:
+//file3.mov 1
+//End of example-------------------
+
+
+1: 
+BirdFlying.prog
+
+2:
+movingShadow.prog
+
+//3:
+//newspaper.mp4
+
+//4:
+//Heros.gif 1
+
+//5:
+//circle.gif
+
+
