@@ -1,7 +1,7 @@
 import gifAnimation.*;
 import processing.video.*;
 import java.util.*;
-import KinectPV2.*;
+import KinectPV2.*; //for Kinect Ver2
 
 enum ActType{
   PICTURE,
@@ -19,19 +19,26 @@ boolean KBLock = false;
 
 
 
-
+//global setting
 void settings(){
   fullScreen();
 }
 
 void setup(){
-  background(40);
+  background(40); //when setup, show deep gray
   noCursor();
+  
   PlayList = new ArrayList<Act>();
+  
+  //LoadPlayList(path) parses the PlayList.txt,
+  //and pushes items into PlayList, the varible defined above.
   LoadPlayList(sketchPath("media/PlayList.txt"));
+  
   curActIdx = PlayList.size() - 1;
 }
 
+
+//Run like a loop. Same as the draw() in OpenGL
 void draw(){   
  imageMode(CORNER);
  if(isBlack){
@@ -45,7 +52,13 @@ void draw(){
 
 
 void keyPressed(){
-  if(!KBLock){
+//key instructions:
+//UP: If the screen is black, play the LAST Act; otherwise turn the screen black.
+//DOWN: If the screen is black, play the NEXT Act; otherwise turn the screen black.
+//RIGHT: Equal to press DOWN twise. Only work when the screen is black. 
+//LEFT: Equal to press UP twise. Only work when the screen is black.
+
+  if(!KBLock){ //Avoid keyboard work before last instruction completed.
     KBLock = true;
     if(key == CODED){
       if(keyCode == DOWN){
@@ -98,11 +111,13 @@ void keyPressed(){
   }
 }
 
+//Catch movieEvent. Can NOT be deleted.
 void movieEvent(Movie m) {
   m.read();
 }
 
-
+//play(), stop(), showImage() are three general control interface 
+//for pictures, GIFs, video, or programs
 void play(Act curAct){
   Picture curPic;
   if(curAct.type == ActType.PICTURE){
@@ -157,6 +172,8 @@ void showImage(Act curAct){
 }
 
 
+//Parse PlayList.txt
+//There should be more convenience method to deal with it.
 void LoadPlayList(String file){
   String lines[] = loadStrings(file);
   String[] buf, buf2;
@@ -257,6 +274,7 @@ void LoadPlayList(String file){
                 break;
             }
           }
+          //programs selector has to be added manually
           if(buf2[2].equals("prog")){
             while(PlayList.size() < aPLB.get(i).ActNo) PlayList.add(new Act(ActType.PROGRAM));
             if(buf2[1].equals("movingShadow")) PlayList.get(aPLB.get(i).ActNo-1).program = new movingShadow(this);
@@ -277,7 +295,8 @@ class Act{
   Act(ActType type)
   {
     if(type == ActType.PICTURE){
-      aPicture = new ArrayList<Picture>();      
+      aPicture = new ArrayList<Picture>(); 
+      //If the type of Act is picture, it can show multiple pictures at the same time     
     } 
     this.type = type;
   }
@@ -289,6 +308,7 @@ class Act{
 }
 
 
+//record location, loop information, and other information of every picture
 class Picture{
   Picture(PApplet parent, String file, int x, int y, int w, int h, boolean isLoop)
   {
@@ -379,6 +399,7 @@ class Video{
   boolean isLoop;
 }
 
+//There may be multiple items have to be displayed in one Act.
 class PlayListBlock{
   PlayListBlock(int ActNo, int BeginLine){
     this.ActNo = ActNo;
@@ -390,6 +411,7 @@ class PlayListBlock{
   int EndLine;
 }
 
+//Every program has to inherit class Program
 abstract class Program{
   public abstract void run();
   public abstract void stop();
